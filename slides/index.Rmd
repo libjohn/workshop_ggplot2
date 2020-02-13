@@ -22,7 +22,9 @@ options(htmltools.dir.version = FALSE)
 ```
 ## Code Repository
 
-Download 
+Download code for this workshop
+
+https://github.com/libjohn/workshop_ggplot2
 
 
 ---
@@ -238,7 +240,7 @@ countdown::countdown(5)
 ```
 
 ---
-class: middle
+class: middle, duke-softblue
 ## Discrete v Continuous
 
 Aesthetics arguments (`color`, `size`, `shape`, etc.) are affected by mode and type of data
@@ -255,7 +257,7 @@ NOTE:  `shape` argument will not work with continuous data
 ---
 ## Set v Map
 
-```{r echo=TRUE, fig.width=9}
+```{r echo=TRUE, fig.height=6, fig.width=9}
 mpg %>% 
   ggplot(aes(displ, hwy)) +
   geom_point(color = "blue") 
@@ -471,7 +473,7 @@ Interactive Exercises from [RStudio Primers -- Visuzliation](https://rstudio.clo
 &nbsp;
 
 .pull-left[.full-width[.content-box-green[
-### Data Analytics Librarian
+### Data Science Librarian
 
 - https://johnlittle.info/
 
@@ -485,7 +487,7 @@ You can make **Rfun** with our resources for R and data science analytics.  See 
 .pull-right[.content-box-grey[
 ### Duke University
 
-**Data & Visualization Services**
+**Center for Data & Visualization Sciences**
 
 - https://library.duke.edu/data/
 - askData@Duke.edu
