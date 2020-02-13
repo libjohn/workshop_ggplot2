@@ -83,7 +83,7 @@ mpg %>%
 
 ## Your Turn 8
 
-Save the last plot and then locate it in the files pane.
+Save the last plot
 
 ```{r}
 ggsave()
