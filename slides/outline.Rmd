@@ -1,0 +1,290 @@
+---
+title: "ggplot2"
+output: html_notebook
+---
+
+```{r message=FALSE, warning=FALSE}
+library(tidyverse)
+# library(ggplot2)
+library(babynames)
+```
+
+
+Citation:  In part, or in whole, slides and outline are inspired by grolemund (master tv)
+
+[RStudio Primers](https://rstudio.cloud/learn/primers)
+[Master the Tidyverse](https://github.com/rstudio/master-the-tidyverse)
+
+--- 
+
+Basic ggplot2 template 
+
+```r
+ggplot(data = starwars, aes(x = height, y = fav_rating)) +
+  geom_----()
+
+```
+
+---
+
+## Example features 
+
+```{r echo=FALSE, fig.height=5, fig.width=6}
+starwars %>%
+  drop_na(mass, height, birth_year, gender) %>%
+  filter(mass < 400,
+         species %in% c("Human", "Droid", "Gungan",
+                        "Mirialan", "Wookiee")) %>%
+  ggplot(aes(x = birth_year, y = height)) +
+  geom_point(
+    aes(color = gender, size = mass, shape = species),
+        alpha = 0.7) +
+  labs(title = "Star Wars species height over year",
+       caption = "source:  dplyr::starwars")
+```
+
+---
+## mpg dataset
+
+about highway mileage, like (`mtcars`)
+
+```{r}
+mpg
+```
+
+---
+
+What relationship do you expect to see between engine
+size (displ) and mileage (hwy)?
+
+```{r echo=FALSE}
+countdown::countdown(1)
+```
+
+
+---
+Run this code in your notebook to make a graph.
+
+Pay **strict attention** to _spelling, capitalization_, and
+_parentheses_!
+
+```r
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy))
+```
+
+```{r echo=FALSE}
+countdown::countdown(1)
+```
+
+---
+
+```r
+mpg %>% 
+  ggplot() +
+  geom_point(aes(displ, hwy))
+
+```
+
+---
+
+```{r}
+mpg %>% 
+  ggplot(aes(displ, hwy)) +
+  geom_point() +
+  geom_smooth(method = lm, se = FALSE)
+```
+
+
+---
+
+1. "Initialize" a plot with ggplot()
+2. Add layers with geom_ functions
+
+
+> `ggplot(data = mpg) +
+geom_point(mapping = aes(x = displ, y = hwy))`
+
+&nbsp;
+
+---
+ 
+TEMPLATE
+ 
+```r
+ggplot(data = <DATA>) +
+ <GEOM_FUNCTION>(mapping = aes(<MAPPINGS>))
+```
+---
+
+## Mappings
+ 
+
+```{r echo=FALSE}
+mpg %>% 
+  ggplot(aes(displ, hwy)) +
+  geom_point() +
+  stat_ellipse(data = . %>% filter(class == "2seater"), geom = "polygon", alpha = 0.3)
+```
+ 
+
+---
+
+## Aesthetics
+
+Shape
+Color
+Size
+Line type
+Opacity
+
+---
+
+Visual Space | &nbsp; | Data Space
+---|---|---
+color | &nbsp; | variable (e.g. `class`)
+Red | <--> | 2 seater
+Brown | <--> | compact
+
+---
+
+```r
+ggplot(mpg) + geom_point(aes(x = displ, y = hwy, color = class))
+        ... ... ...                              size = class))
+        ... ... ...                              shape = class))
+        ... ... ...                              alpha = class))
+```
+
+
+---
+
+```r
+mpg %>% 
+  ggplot(aes(displ, hwy)) +
+  geom_point(aes(color = class))
+```
+
+```{r echo=FALSE}
+mpg %>% 
+  ggplot(aes(displ, hwy)) +
+  geom_point(aes(color = class)) +
+  stat_ellipse(data = . %>% filter(class == "2seater"), geom = "polygon", alpha = 0.3)
+```
+
+---
+## Your Turn 2
+
+Add color, size, alpha, and shape arguments to your `aes()` function.  **Experiment**
+
+
+```{r echo=FALSE}
+countdown::countdown(5)
+```
+
+---
+
+## Discrete v Continuous
+
+Aethetics arguments (`color`, `size`, `shape`, etc.) are affected by mode and type of data
+
+Is your data 
+
+- Categorical (Ordinal, nominal) (`forcats`)
+- Numeric
+
+NOTE:  `shape` arugment will not work with continuous data
+
+---
+## Set v Map
+
+```{r echo=FALSE}
+mpg %>% 
+  ggplot(aes(displ, hwy)) +
+  geom_point(color = "blue") 
+```
+
+
+---
+
+> `... geom_point(aes(x = displ, y = hwy, color = class))` 
+
+> `... geom_point(aes(x = displ, y = hwy), color = class)`
+
+
+---
+
+## Geoms
+
+Geometric Objects
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+mpg %>% 
+  ggplot(aes(displ, hwy)) +
+  geom_point()
+
+mpg %>% 
+  ggplot(aes(displ, hwy)) +
+  geom_smooth()
+``` 
+
+`mpg %>% ggplot(aes(displ, hwy))`
+
+---
+## A few common geoms
+
+Bar graph | geom_bar()  geom_col()
+Histogram | geom_hist
+Scatter plot | geom_point()
+Line graph | geom_line()
+Box plot | geom_boxplot()
+Density | geom_density() | geom_violin()
+Heat map | geom_heatmap()
+Mapping | geom_sf()
+Regression line | geom_smooth()
+
+https://ggplot2.tidyverse.org/reference/index.html
+
+---
+
+## Your Turn
+
+3-7
+
+---
+## Global v local
+
+```{r}
+babynames %>% 
+  filter(name == "John" & sex == "M" | 
+           name == "Elizabeth" & sex == "F") %>% 
+  ggplot(aes(year, n)) +
+  geom_line(aes(color = sex)) +
+  geom_point(alpha = 0.4, shape = "cross")
+```
+
+
+---
+facet wrap
+
+
+---
+
+## Labels
+
+---
+where are the exercises
+
+
+---
+
+## Effective Visualization
+
+https://introds.org/slides/w4_d1-effective-dataviz/w4_d1-effective-dataviz.html#26
+
+---
+
+## Chart Picker
+
+https://www.klipfolio.com/resources/articles/what-is-data-visualization
+
+& Cheatsheet
