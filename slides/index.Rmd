@@ -1,0 +1,515 @@
+---
+title: "Visualization in R with ggplot2"
+author: "John Little"
+date: "`r Sys.Date()`"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: 
+      - default
+      - default-fonts
+      - duke-blue
+      - hygge-duke
+      - libs/cc-fonts.css
+      - libs/figure-captions.css
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+```
+## Code Repository
+
+Download 
+
+
+---
+## Example 
+
+```{r message=FALSE, warning=FALSE, include=FALSE}
+library(babynames)
+library(tidyverse)
+```
+
+```{r echo=FALSE, fig.height=6, fig.width=10}
+starwars %>%
+  drop_na(mass, height, birth_year, gender) %>%
+  filter(mass < 400,
+         species %in% c("Human", "Droid", "Gungan",
+                        "Mirialan", "Wookiee")) %>%
+  ggplot(aes(x = birth_year, y = height)) +
+  geom_point(
+    aes(color = gender, size = mass, shape = species),
+        alpha = 0.7) +
+  labs(title = "Star Wars species height over year",
+       caption = "source:  dplyr::starwars")
+```
+
+.footnote[.tiny[Demonstrates some affordances of the ggplot2 package. Not intended as an example of visualization best practices.]]
+
+---
+class: middle
+## Attribution
+
+Adapted in whole or in part based on the [Visualize Data with ggplot2](https://github.com/rstudio/master-the-tidyverse/blob/master/pdfs/01-Visualize-Data.pdf) slides by Garrett Grolemund at RStudio.  CC BY Garrett Grolemund, RStudio
+
+[CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/)  John Little
+
+---
+class: middle
+## ggplot2 template
+
+
+```r
+ggplot(data = ---, mapping = aes(x = ---, y = ---)) +
+  geom_----()
+
+```
+
+This assumes you loaded the `ggplot2` library package
+```{r message=FALSE, warning=FALSE, INCLUDE=TRUE}
+library(tidyverse)
+# library(ggplot2)  # ggplot2 is included in tidyverse
+```
+
+
+---
+class: middle, duke-orange
+## mpg 
+
+An on-board (`ggplot2`) highway mileage dataset similar to `mtcars`
+
+```r
+mpg
+```
+
+
+What relationship do you expect to see between engine
+size (`displ`) and mileage (`hwy`)?
+
+```{r echo=FALSE}
+countdown::countdown(1)
+```
+
+
+---
+class: middle, duke-orange
+## Your Turn 1
+
+Open `01_exercises.Rmd` in RStudio
+
+Inside the _Your Turn 1_ code chunk, in your `01.exercises.Rmd` notebook, make a graph by typing the following code.
+
+
+```r
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy))
+```
+
+Pay **strict attention** to _spelling, capitalization_, and _parentheses_!
+
+
+```{r echo=FALSE}
+countdown::countdown(1)
+```
+
+---
+class: middle
+```{r echo=FALSE, fig.width=9}
+mpg %>% 
+  ggplot(aes(displ, hwy)) +
+  geom_point()
+```
+
+---
+class: middle
+```{r echo=FALSE, fig.width=9}
+mpg %>% 
+  ggplot(aes(displ, hwy)) +
+  geom_point() +
+  geom_smooth(method = lm, se = FALSE)
+```
+
+---
+class: middle
+
+### Template
+```r
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy))
+```
+
+### Alternative, tidy, concise
+.content-box-grey[
+```r
+*mpg %>% 
+*  ggplot() + 
+   geom_point(aes(displ, hwy))  
+```
+
+1. "Initialize" a plot with ggplot()
+2. Add layers with [geom_____ functions](https://ggplot2.tidyverse.org/reference/index.html#section-layer-geoms)
+
+
+---
+## Mappings
+
+```r
+mpg %>%
+  ggplot() +
+* geom_point(aes(x = ___, y = ___))
+```
+
+```{r echo=FALSE, fig.height=5, fig.width=9}
+mpg %>% 
+  ggplot(aes(displ, hwy)) +
+  geom_point() +
+  stat_ellipse(data = . %>% filter(class == "2seater"), geom = "polygon", alpha = 0.3)
+```
+ 
+---
+## Aesthetics
+
+- Color
+- Size
+- Line type
+- Opacity
+- Shape
+
+### Map data cell values to aesthetics
+
+.center[`aes(color = class)`]
+
+Visual Space | &nbsp; | Data Space
+---|---|---
+`color` | &nbsp; | `mpg$class`
+.red[Red] | $\Leftrightarrow$ | 2 seater
+.blue[Blue] | $\Leftrightarrow$ | pickup
+... | $\Leftrightarrow$ | ...
+.green[Green] | $\Leftrightarrow$ | midsize
+
+
+---
+
+```r
+mpg %>% 
+  ggplot(aes(displ, hwy)) +
+* geom_point(aes(color = class))
+```
+
+```{r echo=FALSE, fig.width=9}
+mpg %>% 
+  ggplot(aes(displ, hwy)) +
+  geom_point(aes(color = class)) +
+  stat_ellipse(data = . %>% filter(class == "2seater"), geom = "polygon", alpha = 0.2)
+```
+
+
+---
+class: middle
+
+
+```r
+ggplot(mpg) + geom_point(aes(x = displ, y = hwy, color = class))
+       ... ... ...                               size = class))
+       ... ... ...                               shape = class))
+       ... ... ...                               alpha = class))
+```
+
+
+---
+class: duke-orange
+## Your Turn 2
+
+Re-focus in `01_exercises.Rmd`  
+
+### Experiment
+
+1. Add color, size, alpha, and shape arguments to your `aes()` function
+1. Map different aesthetics to different variables
+1. Map multiple aesthetics to multiple variables
+1. How do continuous and discrete variables affect the aesthetic mappings
+
+
+```{r echo=FALSE}
+countdown::countdown(5)
+```
+
+---
+class: middle
+## Discrete v Continuous
+
+Aesthetics arguments (`color`, `size`, `shape`, etc.) are affected by mode and type of data
+
+Is your data 
+
+- Discrete (Categorical: ordinal, nominal) (See:  [`library(forcats)`](https://forcats.tidyverse.org/))
+- Continuous (Numeric)
+
+NOTE:  `shape` argument will not work with continuous data
+
+.footnote[See:  _R4DS_ [Important types of atomic vectors](https://r4ds.had.co.nz/vectors.html#important-types-of-atomic-vector) &  _R4DS_ [Factors](https://r4ds.had.co.nz/factors.html)]
+
+---
+## Set v Map
+
+```{r echo=TRUE, fig.width=9}
+mpg %>% 
+  ggplot(aes(displ, hwy)) +
+  geom_point(color = "blue") 
+```
+
+
+---
+class: middle
+
+.pull-left[
+```{r echo=TRUE}
+mpg %>%
+  ggplot(aes(displ, hwy)) +
+ geom_point(aes(color = class))#<<
+```
+
+]
+
+.pull-right[
+
+```{r echo=TRUE}
+mpg %>% 
+  ggplot(aes(displ, hwy)) +
+{{ geom_point(color = "blue")}}
+```
+
+]
+
+---
+
+## Geoms
+
+[Geometric Objects](https://ggplot2.tidyverse.org/reference/index.html#section-layer-geoms)
+
+.pull-left[
+
+```{r}
+mpg %>% 
+  ggplot(aes(displ, hwy)) +
+ {{ geom_point()  }}
+``` 
+
+]
+
+.pull-right[
+
+
+```{r message=FALSE, warning=FALSE}
+mpg %>% 
+  ggplot(aes(displ, hwy)) +
+{{ geom_smooth()  }}
+```
+
+]
+
+
+---
+## A few common geoms
+
+Type | Geom
+---|---
+Bar graph | `geom_bar()  geom_col()`
+Histogram | `geom_hist`
+Scatter plot | `geom_point()`
+Line graph | `geom_line()`
+Box plot | `geom_boxplot()`
+Density | `geom_density()  geom_violin()`
+Heat map | `geom_heatmap()`
+Mapping | `geom_sf()`
+Regression line | `geom_smooth()`
+
+.center[[More Geometric Objects](https://ggplot2.tidyverse.org/reference/index.html#section-layer-geoms)]
+
+.footnote[See Also:  RStudio Menubar > Help > Cheatsheets > Visualization with ggplot2]
+
+---
+class: duke-orange
+## Your Turn
+
+Re-focus in `01_exercises.Rmd`  
+
+See Your Turn 3 through 7
+
+Answer can be found in `01_exercises_answers.Rmd`
+
+```{r echo=FALSE}
+countdown::countdown(10)
+```
+---
+## Global v local
+
+```{r echo=FALSE, fig.height=5, fig.width=9}
+babynames %>% 
+  filter(name == "John" & sex == "M" | 
+           name == "Elizabeth" & sex == "F") %>% 
+  ggplot(aes(year, prop)) +
+  geom_line(aes(color = sex)) +
+  geom_point(alpha = 0.4, shape = "cross") +
+  geom_text(data = . %>% filter(year == 1965), aes(label = name),
+            nudge_y = .009) +
+  labs(title = "Name Popularity") + 
+  theme(legend.position = "none")           
+```
+
+Global = `ggplot(aes(_______))`
+
+Override = individual layers: `geom_---(aes(______))`
+
+---
+class: middle
+```{r echo=TRUE, eval=FALSE}
+library(babynames)
+babynames %>% 
+  ggplot(aes(year, prop)) +  #<<
+  geom_line(aes(color = sex)) +  #<<
+  geom_point(alpha = 0.4, shape = "cross")  #<< 
+```
+
+```{r echo=FALSE, fig.height=5, fig.width=9}
+babynames %>% 
+  filter(name == "John" & sex == "M" | 
+           name == "Elizabeth" & sex == "F") %>% 
+  ggplot(aes(year, prop)) +
+  geom_line(aes(color = sex)) +
+  geom_point(alpha = 0.4, shape = "cross") +
+  geom_text(data = . %>% filter(year == 1965), aes(label = name),
+            nudge_y = .009) +
+  labs(title = "Name Popularity") + 
+  theme(legend.position = "none")           
+```
+
+
+.tiny[.footnote[Next slide for actual code]]
+
+---
+class: middle
+
+```r
+babynames %>% 
+  filter(name == "John" & sex == "M" | 
+           name == "Elizabeth" & sex == "F") %>% 
+  ggplot(aes(year, prop)) +
+  geom_line(aes(color = sex)) +
+  geom_point(alpha = 0.4, shape = "cross") +
+  geom_text(data = . %>% filter(year == 1965), aes(label = name),
+            nudge_y = .009) +
+  labs(title = "Name Popularity") + 
+  theme(legend.position = "none")           
+```
+
+
+---
+class: middle
+## Facet wrap
+
+
+```{r echo=TRUE, fig.height=5, fig.width=9}
+mpg %>% 
+  ggplot(aes(displ, hwy)) +
+  geom_point() +
+  facet_wrap(~ class)  #<<
+```
+
+
+---
+class: middle
+## Labels
+
+```{r fig.height=5, fig.width=9}
+mpg %>% 
+  ggplot(aes(displ, hwy)) +
+  geom_point() +
+  labs(title = "Automobile mileage",               #<<
+       x = "Displacement", y = "Highway mpg",      #<<
+       caption = "Source:  ggplot2::mpg")          #<<
+```
+
+https://ggplot2.tidyverse.org/reference/labs.html
+
+---
+## Scales
+
+https://ggplot2.tidyverse.org/reference/index.html#section-scales
+
+---
+## Themes
+
+https://ggplot2.tidyverse.org/reference/theme.html#examples
+
+
+---
+## Effective Visualization
+
+[Designing effective visualizations](https://introds.org/slides/w4_d1-effective-dataviz/w4_d1-effective-dataviz.html#26)  From Dr. Mine Çetinkaya-Rundel - _Introduction to Data Science_ https://introds.org
+
+[Data Visualization: A Practical Introduction](https://socviz.co/lookatdata.html) Kieran Healy
+
+
+
+---
+## Reinforce your learning 
+
+On your own
+
+Interactive Exercises from [RStudio Primers -- Visuzliation](https://rstudio.cloud/learn/primers/3)
+
+[Angela Zoss's code exercises](https://github.com/amzoss/ggplot2-DF19) 
+
+---
+
+# John Little
+
+&nbsp;
+
+.pull-left[.full-width[.content-box-green[
+### Data Analytics Librarian
+
+- https://johnlittle.info/
+
+- https://github.com/libjohn
+]]
+
+### Rfun host...
+You can make **Rfun** with our resources for R and data science analytics.  See the [R we having fun yet‽](https://rfun.library.duke.edu/) resource pages.
+]
+
+.pull-right[.content-box-grey[
+### Duke University
+
+**Data & Visualization Services**
+
+- https://library.duke.edu/data/
+- askData@Duke.edu
+- The /Edge, Bostock (1st Floor)
+- [Past Workshops](https://library.duke.edu/data/news/past-workshops)
+- [Guides & Tutorials](https://library.duke.edu/data/tutorials)
+
+]]
+
+
+
+
+---
+class: center, middle
+## Shareable 
+
+Data, presentation, and handouts 
+
+<span class="cc">
+<!-- Key: a: SA, b: BY, c: CC Circle, d: ND, n: NC, m: Sampling, s: Share, r: Remix, C: CC Full Logo -->
+C bn
+</span>
+
+
+[CC BY-NC license](https://creativecommons.org/licenses/by-nc/4.0/)
+
+

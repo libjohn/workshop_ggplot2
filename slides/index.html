@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Visualization in R with ggplot2</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="John Little" />
+    <meta name="date" content="2020-02-13" />
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/remark-css/default-fonts.css" rel="stylesheet" />
+    <link href="libs/remark-css/duke-blue.css" rel="stylesheet" />
+    <link href="libs/remark-css/hygge-duke.css" rel="stylesheet" />
+    <link href="libs/countdown/countdown.css" rel="stylesheet" />
+    <script src="libs/countdown/countdown.js"></script>
+    <link rel="stylesheet" href="libs\cc-fonts.css" type="text/css" />
+    <link rel="stylesheet" href="libs\figure-captions.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Visualization in R with ggplot2
+### John Little
+### 2020-02-13
+
+---
+
+
+## Code Repository
+
+Download 
+
+
+---
+## Example 
+
+
+
+![](index_files/figure-html/unnamed-chunk-2-1.png)&lt;!-- --&gt;
+
+.footnote[.tiny[Demonstrates some affordances of the ggplot2 package. Not intended as an example of visualization best practices.]]
+
+---
+class: middle
+## Attribution
+
+Adapted in whole or in part based on the [Visualize Data with ggplot2](https://github.com/rstudio/master-the-tidyverse/blob/master/pdfs/01-Visualize-Data.pdf) slides by Garrett Grolemund at RStudio.  CC BY Garrett Grolemund, RStudio
+
+[CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/)  John Little
+
+---
+class: middle
+## ggplot2 template
+
+
+```r
+ggplot(data = ---, mapping = aes(x = ---, y = ---)) +
+  geom_----()
+
+```
+
+This assumes you loaded the `ggplot2` library package
+
+```r
+library(tidyverse)
+# library(ggplot2)  # ggplot2 is included in tidyverse
+```
+
+
+---
+class: middle, duke-orange
+## mpg 
+
+An on-board (`ggplot2`) highway mileage dataset similar to `mtcars`
+
+```r
+mpg
+```
+
+
+What relationship do you expect to see between engine
+size (`displ`) and mileage (`hwy`)?
+
+<div class="countdown" id="timer_5e45bb66" style="right:0;bottom:0;" data-warnwhen="0">
+<code class="countdown-time"><span class="countdown-digits minutes">01</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
+
+
+---
+class: middle, duke-orange
+## Your Turn 1
+
+Open `01_exercises.Rmd` in RStudio
+
+Inside the _Your Turn 1_ code chunk, in your `01.exercises.Rmd` notebook, make a graph by typing the following code.
+
+
+```r
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy))
+```
+
+Pay **strict attention** to _spelling, capitalization_, and _parentheses_!
+
+
+<div class="countdown" id="timer_5e45bbc9" style="right:0;bottom:0;" data-warnwhen="0">
+<code class="countdown-time"><span class="countdown-digits minutes">01</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
+
+---
+class: middle
+![](index_files/figure-html/unnamed-chunk-6-1.png)&lt;!-- --&gt;
+
+---
+class: middle
+![](index_files/figure-html/unnamed-chunk-7-1.png)&lt;!-- --&gt;
+
+---
+class: middle
+
+### Template
+```r
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy))
+```
+
+### Alternative, tidy, concise
+.content-box-grey[
+```r
+*mpg %&gt;% 
+*  ggplot() + 
+   geom_point(aes(displ, hwy))  
+```
+
+1. "Initialize" a plot with ggplot()
+2. Add layers with [geom_____ functions](https://ggplot2.tidyverse.org/reference/index.html#section-layer-geoms)
+
+
+---
+## Mappings
+
+```r
+mpg %&gt;%
+  ggplot() +
+* geom_point(aes(x = ___, y = ___))
+```
+
+![](index_files/figure-html/unnamed-chunk-8-1.png)&lt;!-- --&gt;
+ 
+---
+## Aesthetics
+
+- Color
+- Size
+- Line type
+- Opacity
+- Shape
+
+### Map data cell values to aesthetics
+
+.center[`aes(color = class)`]
+
+Visual Space | &amp;nbsp; | Data Space
+---|---|---
+`color` | &amp;nbsp; | `mpg$class`
+.red[Red] | `\(\Leftrightarrow\)` | 2 seater
+.blue[Blue] | `\(\Leftrightarrow\)` | pickup
+... | `\(\Leftrightarrow\)` | ...
+.green[Green] | `\(\Leftrightarrow\)` | midsize
+
+
+---
+
+```r
+mpg %&gt;% 
+  ggplot(aes(displ, hwy)) +
+* geom_point(aes(color = class))
+```
+
+![](index_files/figure-html/unnamed-chunk-9-1.png)&lt;!-- --&gt;
+
+
+---
+class: middle
+
+
+```r
+ggplot(mpg) + geom_point(aes(x = displ, y = hwy, color = class))
+       ... ... ...                               size = class))
+       ... ... ...                               shape = class))
+       ... ... ...                               alpha = class))
+```
+
+
+---
+class: duke-orange
+## Your Turn 2
+
+Re-focus in `01_exercises.Rmd`  
+
+### Experiment
+
+1. Add color, size, alpha, and shape arguments to your `aes()` function
+1. Map different aesthetics to different variables
+1. Map multiple aesthetics to multiple variables
+1. How do continuous and discrete variables affect the aesthetic mappings
+
+
+<div class="countdown" id="timer_5e45bcbc" style="right:0;bottom:0;" data-warnwhen="0">
+<code class="countdown-time"><span class="countdown-digits minutes">05</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
+
+---
+class: middle
+## Discrete v Continuous
+
+Aesthetics arguments (`color`, `size`, `shape`, etc.) are affected by mode and type of data
+
+Is your data 
+
+- Discrete (Categorical: ordinal, nominal) (See:  [`library(forcats)`](https://forcats.tidyverse.org/))
+- Continuous (Numeric)
+
+NOTE:  `shape` argument will not work with continuous data
+
+.footnote[See:  _R4DS_ [Important types of atomic vectors](https://r4ds.had.co.nz/vectors.html#important-types-of-atomic-vector) &amp;  _R4DS_ [Factors](https://r4ds.had.co.nz/factors.html)]
+
+---
+## Set v Map
+
+
+```r
+mpg %&gt;% 
+  ggplot(aes(displ, hwy)) +
+  geom_point(color = "blue") 
+```
+
+![](index_files/figure-html/unnamed-chunk-11-1.png)&lt;!-- --&gt;
+
+
+---
+class: middle
+
+.pull-left[
+
+```r
+mpg %&gt;%
+  ggplot(aes(displ, hwy)) +
+*geom_point(aes(color = class))
+```
+
+![](index_files/figure-html/unnamed-chunk-12-1.png)&lt;!-- --&gt;
+
+]
+
+.pull-right[
+
+
+```r
+mpg %&gt;% 
+  ggplot(aes(displ, hwy)) +
+* geom_point(color = "blue")
+```
+
+![](index_files/figure-html/unnamed-chunk-13-1.png)&lt;!-- --&gt;
+
+]
+
+---
+
+## Geoms
+
+[Geometric Objects](https://ggplot2.tidyverse.org/reference/index.html#section-layer-geoms)
+
+.pull-left[
+
+
+```r
+mpg %&gt;% 
+  ggplot(aes(displ, hwy)) +
+*  geom_point()  
+```
+
+![](index_files/figure-html/unnamed-chunk-14-1.png)&lt;!-- --&gt;
+
+]
+
+.pull-right[
+
+
+
+```r
+mpg %&gt;% 
+  ggplot(aes(displ, hwy)) +
+* geom_smooth()  
+```
+
+![](index_files/figure-html/unnamed-chunk-15-1.png)&lt;!-- --&gt;
+
+]
+
+
+---
+## A few common geoms
+
+Type | Geom
+---|---
+Bar graph | `geom_bar()  geom_col()`
+Histogram | `geom_hist`
+Scatter plot | `geom_point()`
+Line graph | `geom_line()`
+Box plot | `geom_boxplot()`
+Density | `geom_density()  geom_violin()`
+Heat map | `geom_heatmap()`
+Mapping | `geom_sf()`
+Regression line | `geom_smooth()`
+
+.center[[More Geometric Objects](https://ggplot2.tidyverse.org/reference/index.html#section-layer-geoms)]
+
+.footnote[See Also:  RStudio Menubar &gt; Help &gt; Cheatsheets &gt; Visualization with ggplot2]
+
+---
+class: duke-orange
+## Your Turn
+
+Re-focus in `01_exercises.Rmd`  
+
+See Your Turn 3 through 7
+
+Answer can be found in `01_exercises_answers.Rmd`
+
+<div class="countdown" id="timer_5e45bc51" style="right:0;bottom:0;" data-warnwhen="0">
+<code class="countdown-time"><span class="countdown-digits minutes">10</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
+---
+## Global v local
+
+![](index_files/figure-html/unnamed-chunk-17-1.png)&lt;!-- --&gt;
+
+Global = `ggplot(aes(_______))`
+
+Override = individual layers: `geom_---(aes(______))`
+
+---
+class: middle
+
+```r
+library(babynames)
+babynames %&gt;% 
+* ggplot(aes(year, prop)) +
+* geom_line(aes(color = sex)) +
+* geom_point(alpha = 0.4, shape = "cross")
+```
+
+![](index_files/figure-html/unnamed-chunk-19-1.png)&lt;!-- --&gt;
+
+
+.tiny[.footnote[Next slide for actual code]]
+
+---
+class: middle
+
+```r
+babynames %&gt;% 
+  filter(name == "John" &amp; sex == "M" | 
+           name == "Elizabeth" &amp; sex == "F") %&gt;% 
+  ggplot(aes(year, prop)) +
+  geom_line(aes(color = sex)) +
+  geom_point(alpha = 0.4, shape = "cross") +
+  geom_text(data = . %&gt;% filter(year == 1965), aes(label = name),
+            nudge_y = .009) +
+  labs(title = "Name Popularity") + 
+  theme(legend.position = "none")           
+```
+
+
+---
+class: middle
+## Facet wrap
+
+
+
+```r
+mpg %&gt;% 
+  ggplot(aes(displ, hwy)) +
+  geom_point() +
+* facet_wrap(~ class)
+```
+
+![](index_files/figure-html/unnamed-chunk-20-1.png)&lt;!-- --&gt;
+
+
+---
+class: middle
+## Labels
+
+
+```r
+mpg %&gt;% 
+  ggplot(aes(displ, hwy)) +
+  geom_point() +
+* labs(title = "Automobile mileage",
+*      x = "Displacement", y = "Highway mpg",
+*      caption = "Source:  ggplot2::mpg")
+```
+
+![](index_files/figure-html/unnamed-chunk-21-1.png)&lt;!-- --&gt;
+
+https://ggplot2.tidyverse.org/reference/labs.html
+
+---
+## Scales
+
+https://ggplot2.tidyverse.org/reference/index.html#section-scales
+
+---
+## Themes
+
+https://ggplot2.tidyverse.org/reference/theme.html#examples
+
+
+---
+## Effective Visualization
+
+[Designing effective visualizations](https://introds.org/slides/w4_d1-effective-dataviz/w4_d1-effective-dataviz.html#26)  From Dr. Mine Çetinkaya-Rundel - _Introduction to Data Science_ https://introds.org
+
+[Data Visualization: A Practical Introduction](https://socviz.co/lookatdata.html) Kieran Healy
+
+
+
+---
+## Reinforce your learning 
+
+On your own
+
+Interactive Exercises from [RStudio Primers -- Visuzliation](https://rstudio.cloud/learn/primers/3)
+
+[Angela Zoss's code exercises](https://github.com/amzoss/ggplot2-DF19) 
+
+---
+
+# John Little
+
+&amp;nbsp;
+
+.pull-left[.full-width[.content-box-green[
+### Data Analytics Librarian
+
+- https://johnlittle.info/
+
+- https://github.com/libjohn
+]]
+
+### Rfun host...
+You can make **Rfun** with our resources for R and data science analytics.  See the [R we having fun yet‽](https://rfun.library.duke.edu/) resource pages.
+]
+
+.pull-right[.content-box-grey[
+### Duke University
+
+**Data &amp; Visualization Services**
+
+- https://library.duke.edu/data/
+- askData@Duke.edu
+- The /Edge, Bostock (1st Floor)
+- [Past Workshops](https://library.duke.edu/data/news/past-workshops)
+- [Guides &amp; Tutorials](https://library.duke.edu/data/tutorials)
+
+]]
+
+
+
+
+---
+class: center, middle
+## Shareable 
+
+Data, presentation, and handouts 
+
+&lt;span class="cc"&gt;
+&lt;!-- Key: a: SA, b: BY, c: CC Circle, d: ND, n: NC, m: Sampling, s: Share, r: Remix, C: CC Full Logo --&gt;
+C bn
+&lt;/span&gt;
+
+
+[CC BY-NC license](https://creativecommons.org/licenses/by-nc/4.0/)
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

@@ -3,11 +3,12 @@ title: "ggplot2"
 output: html_notebook
 ---
 
-```{r message=FALSE, warning=FALSE}
+```{r message=FALSE, warning=FALSE, INCLUDE=TRUE}
 library(tidyverse)
 # library(ggplot2)
 library(babynames)
 ```
+
 
 
 Citation:  In part, or in whole, slides and outline are inspired by grolemund (master tv)
@@ -257,19 +258,55 @@ https://ggplot2.tidyverse.org/reference/index.html
 babynames %>% 
   filter(name == "John" & sex == "M" | 
            name == "Elizabeth" & sex == "F") %>% 
-  ggplot(aes(year, n)) +
+  ggplot(aes(year, prop)) +
   geom_line(aes(color = sex)) +
-  geom_point(alpha = 0.4, shape = "cross")
+  geom_point(alpha = 0.4, shape = "cross") +
+  geom_text(data = . %>% filter(year == 1965), aes(label = name),
+            nudge_y = .009) +
+  labs(title = "Name Popularity") + 
+  theme(legend.position = "none")           
 ```
 
+Global = `ggplot(aes())`
+Override = individual layer geoms
 
 ---
 facet wrap
 
 
+```{r}
+mpg %>% 
+  ggplot(aes(displ, hwy)) +
+  geom_point() +
+  facet_wrap(~ class)
+```
+
+
 ---
 
 ## Labels
+
+```{r}
+mpg %>% 
+  ggplot(aes(displ, hwy)) +
+  geom_point() +
+  labs(title = "Automobile mileage",
+       x = "Displacement", y = "Highway mpg",
+       caption = "Source:  ggplot2::mpg")
+```
+
+https://ggplot2.tidyverse.org/reference/labs.html
+
+---
+scales
+
+https://ggplot2.tidyverse.org/reference/index.html#section-scales
+
+---
+themes
+
+https://ggplot2.tidyverse.org/reference/theme.html#examples
+
 
 ---
 where are the exercises
@@ -288,3 +325,12 @@ https://introds.org/slides/w4_d1-effective-dataviz/w4_d1-effective-dataviz.html#
 https://www.klipfolio.com/resources/articles/what-is-data-visualization
 
 & Cheatsheet
+
+---
+## On Your Own
+
+Reinforce with
+
+Interactive Exercises from [RStudio Primers -- Visuzliation](https://rstudio.cloud/learn/primers/3)
+
+[Angela Zoss's code exercises](https://github.com/amzoss/ggplot2-DF19) 
