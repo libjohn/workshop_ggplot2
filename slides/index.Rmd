@@ -163,7 +163,7 @@ class: middle
 ```r
 mpg %>%
   ggplot() +
-* geom_point(aes(x = ___, y = ___))
+* geom_point(aes(displ, hwy))
 ```
 
 ```{r echo=FALSE, fig.height=5, fig.width=9}
