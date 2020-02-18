@@ -213,12 +213,22 @@ mpg %>%
 ---
 class: middle
 
-
-```r
-ggplot(mpg) + geom_point(aes(x = displ, y = hwy, color = class))
-       ... ... ...                               size = class))
-       ... ... ...                               shape = class))
-       ... ... ...                               alpha = class))
+```{r eval=FALSE, echo=TRUE}
+ggplot(mpg %>% filter(class != "suv")) + 
+  geom_point(aes(x = displ, y = hwy,
+                 color = class,          #<< 
+                 size = class,           #<< 
+                 shape = class,          #<< 
+                 alpha = class))         #<<
+```
+```{r echo=FALSE, fig.height=6, fig.width=9, message=FALSE, warning=FALSE}
+ggplot(mpg %>% filter(class != "suv")) + 
+  geom_point(aes(x = displ, y = hwy,
+                 color = class,          #<< 
+                 size = class,           #<< 
+                 shape = class,          #<< 
+                 alpha = class)) +       #<<
+  scale_color_viridis_d()
 ```
 
 
@@ -462,9 +472,9 @@ https://ggplot2.tidyverse.org/reference/ggtheme.html
 
 On your own...
 
-Interactive Exercises from [RStudio Primers -- Visuzliation](https://rstudio.cloud/learn/primers/3)
+Interactive Exercises from [RStudio Primers -- Visualization](https://rstudio.cloud/learn/primers/3)
 
-[Angela Zoss's code exercises](https://github.com/amzoss/ggplot2-DF19) 
+[Angela Zoss code exercises](https://github.com/amzoss/ggplot2-DF19) 
 
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: "Visualize Data in R with ggplot2"
 subtitle: "Exercises"
-abstract: "These exercises are adapated in whole or in part based on the <i>Master the Tidyverse</i> work by Garrett Grolemund at RStudio.  \nCC BY Garrett Grolemund, RStudio ; BY-NC John Little"
+abstract: "These exercises are adapted in whole or in part based on the <i>Master the Tidyverse</i> work by Garrett Grolemund at RStudio.  \nCC BY Garrett Grolemund, RStudio ; BY-NC John Little"
 output: html_notebook
 ---
 
