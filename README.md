@@ -11,7 +11,7 @@ Supporting code for ggplot2 workshop
 
 Part of the Rfun learning series: <https://Rfun.library.duke.edu/>
 
-  - [Pre Survey](https://forms.gle/Gm4MM8uyr76ZVDgJ7)
+  - [Pre Survey](https://forms.gle/HhpzYcdGqKpiocA7A)
   - [Questions During the
     Workshop](https://docs.google.com/document/d/1xV-BPDTfo85NKeBI2BiBo1sD73E7eFWTRbHMtXm_foc/edit?usp=sharing)
-  - Post Survey
+  - [Post Survey](https://forms.gle/YJRRwK2jcmAxdh7w6)
