@@ -3,6 +3,7 @@ _publish.R
 _book
 _bookdown_files
 rsconnect
+01_exercises.nb.html
 
 # History files
 .Rhistory

@@ -87,9 +87,10 @@ An on-board (`ggplot2`) highway mileage dataset similar to `mtcars`
 mpg
 ```
 
-
 What relationship do you expect to see between engine
 size (`displ`) and mileage (`hwy`)?
+
+If time allows, familiarize yourself with the `mpg` dataset
 
 ```{r echo=FALSE}
 countdown::countdown(1)
@@ -139,7 +140,7 @@ class: middle
 
 ### Template
 ```r
-ggplot(data = mpg) +
+*ggplot(data = mpg) +
   geom_point(mapping = aes(x = displ, y = hwy))
 ```
 
@@ -150,6 +151,7 @@ ggplot(data = mpg) +
 *  ggplot() + 
    geom_point(aes(displ, hwy))  
 ```
+]
 
 1. "Initialize" a plot with ggplot()
 2. Add layers with [geom_____ functions](https://ggplot2.tidyverse.org/reference/index.html#section-layer-geoms)
@@ -194,7 +196,6 @@ Visual Space | &nbsp; | Data Space
 
 
 ---
-
 ```r
 mpg %>% 
   ggplot(aes(displ, hwy)) +
@@ -205,7 +206,7 @@ mpg %>%
 mpg %>% 
   ggplot(aes(displ, hwy)) +
   geom_point(aes(color = class)) +
-  stat_ellipse(data = . %>% filter(class == "2seater"), geom = "polygon", alpha = 0.2)
+  stat_ellipse(data = . %>% filter(class == "2seater"))
 ```
 
 
@@ -231,7 +232,6 @@ Re-focus in `01_exercises.Rmd`
 
 1. Add color, size, alpha, and shape arguments to your `aes()` function
 1. Map different aesthetics to different variables
-1. Map multiple aesthetics to multiple variables
 1. How do continuous and discrete variables affect the aesthetic mappings
 
 
@@ -255,7 +255,7 @@ NOTE:  `shape` argument will not work with continuous data
 .footnote[See:  _R4DS_ [Important types of atomic vectors](https://r4ds.had.co.nz/vectors.html#important-types-of-atomic-vector) &  _R4DS_ [Factors](https://r4ds.had.co.nz/factors.html)]
 
 ---
-## Set v Map
+## Mapping v Setting
 
 ```{r echo=TRUE, fig.height=6, fig.width=9}
 mpg %>% 
@@ -271,7 +271,7 @@ class: middle
 ```{r echo=TRUE}
 mpg %>%
   ggplot(aes(displ, hwy)) +
- geom_point(aes(color = class))#<<
+ geom_point(aes(color = class)) #<< 
 ```
 
 ]
@@ -281,7 +281,7 @@ mpg %>%
 ```{r echo=TRUE}
 mpg %>% 
   ggplot(aes(displ, hwy)) +
-{{ geom_point(color = "blue")}}
+{{ geom_point(color = "blue") }}
 ```
 
 ]
@@ -451,7 +451,7 @@ https://ggplot2.tidyverse.org/reference/theme.html#examples
 ---
 ## Effective Visualization
 
-[Designing effective visualizations](https://introds.org/slides/w4_d1-effective-dataviz/w4_d1-effective-dataviz.html#26)  From Dr. Mine Çetinkaya-Rundel - _Introduction to Data Science_ https://introds.org
+[Designing effective visualizations](https://introds.org/slides/w4_d1-effective-dataviz/w4_d1-effective-dataviz.html#26) by Dr. Mine Çetinkaya-Rundel - _Introduction to Data Science_ https://introds.org
 
 [Data Visualization: A Practical Introduction](https://socviz.co/lookatdata.html) Kieran Healy
 
@@ -460,7 +460,7 @@ https://ggplot2.tidyverse.org/reference/theme.html#examples
 ---
 ## Reinforce your learning 
 
-On your own
+On your own...
 
 Interactive Exercises from [RStudio Primers -- Visuzliation](https://rstudio.cloud/learn/primers/3)
 

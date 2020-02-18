@@ -78,11 +78,12 @@ An on-board (`ggplot2`) highway mileage dataset similar to `mtcars`
 mpg
 ```
 
-
 What relationship do you expect to see between engine
 size (`displ`) and mileage (`hwy`)?
 
-<div class="countdown" id="timer_5e45c158" style="right:0;bottom:0;" data-warnwhen="0">
+If time allows, familiarize yourself with the `mpg` dataset
+
+<div class="countdown" id="timer_5e45f1c4" style="right:0;bottom:0;" data-warnwhen="0">
 <code class="countdown-time"><span class="countdown-digits minutes">01</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 
@@ -104,7 +105,7 @@ ggplot(data = mpg) +
 Pay **strict attention** to _spelling, capitalization_, and _parentheses_!
 
 
-<div class="countdown" id="timer_5e45be3c" style="right:0;bottom:0;" data-warnwhen="0">
+<div class="countdown" id="timer_5e45efb7" style="right:0;bottom:0;" data-warnwhen="0">
 <code class="countdown-time"><span class="countdown-digits minutes">01</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 
@@ -121,7 +122,7 @@ class: middle
 
 ### Template
 ```r
-ggplot(data = mpg) +
+*ggplot(data = mpg) +
   geom_point(mapping = aes(x = displ, y = hwy))
 ```
 
@@ -132,6 +133,7 @@ ggplot(data = mpg) +
 *  ggplot() + 
    geom_point(aes(displ, hwy))  
 ```
+]
 
 1. "Initialize" a plot with ggplot()
 2. Add layers with [geom_____ functions](https://ggplot2.tidyverse.org/reference/index.html#section-layer-geoms)
@@ -171,7 +173,6 @@ Visual Space | &amp;nbsp; | Data Space
 
 
 ---
-
 ```r
 mpg %&gt;% 
   ggplot(aes(displ, hwy)) +
@@ -203,11 +204,10 @@ Re-focus in `01_exercises.Rmd`
 
 1. Add color, size, alpha, and shape arguments to your `aes()` function
 1. Map different aesthetics to different variables
-1. Map multiple aesthetics to multiple variables
 1. How do continuous and discrete variables affect the aesthetic mappings
 
 
-<div class="countdown" id="timer_5e45c0a9" style="right:0;bottom:0;" data-warnwhen="0">
+<div class="countdown" id="timer_5e45f213" style="right:0;bottom:0;" data-warnwhen="0">
 <code class="countdown-time"><span class="countdown-digits minutes">05</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 
@@ -227,7 +227,7 @@ NOTE:  `shape` argument will not work with continuous data
 .footnote[See:  _R4DS_ [Important types of atomic vectors](https://r4ds.had.co.nz/vectors.html#important-types-of-atomic-vector) &amp;  _R4DS_ [Factors](https://r4ds.had.co.nz/factors.html)]
 
 ---
-## Set v Map
+## Mapping v Setting
 
 
 ```r
@@ -260,7 +260,7 @@ mpg %&gt;%
 ```r
 mpg %&gt;% 
   ggplot(aes(displ, hwy)) +
-* geom_point(color = "blue")
+* geom_point(color = "blue") 
 ```
 
 ![](index_files/figure-html/unnamed-chunk-13-1.png)&lt;!-- --&gt;
@@ -330,7 +330,7 @@ See Your Turn 3 through 7
 
 Answer can be found in `01_exercises_answers.Rmd`
 
-<div class="countdown" id="timer_5e45bf4a" style="right:0;bottom:0;" data-warnwhen="0">
+<div class="countdown" id="timer_5e45eebd" style="right:0;bottom:0;" data-warnwhen="0">
 <code class="countdown-time"><span class="countdown-digits minutes">10</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 ---
@@ -423,7 +423,7 @@ https://ggplot2.tidyverse.org/reference/theme.html#examples
 ---
 ## Effective Visualization
 
-[Designing effective visualizations](https://introds.org/slides/w4_d1-effective-dataviz/w4_d1-effective-dataviz.html#26)  From Dr. Mine Çetinkaya-Rundel - _Introduction to Data Science_ https://introds.org
+[Designing effective visualizations](https://introds.org/slides/w4_d1-effective-dataviz/w4_d1-effective-dataviz.html#26) by Dr. Mine Çetinkaya-Rundel - _Introduction to Data Science_ https://introds.org
 
 [Data Visualization: A Practical Introduction](https://socviz.co/lookatdata.html) Kieran Healy
 
