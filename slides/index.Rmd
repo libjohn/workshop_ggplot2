@@ -445,7 +445,7 @@ https://ggplot2.tidyverse.org/reference/index.html#section-scales
 ---
 ## Themes
 
-https://ggplot2.tidyverse.org/reference/theme.html#examples
+https://ggplot2.tidyverse.org/reference/ggtheme.html
 
 
 ---
